@@ -183,7 +183,7 @@ if [ "$WANT_BUILD_DEPS" = 'Y' ]; then
     $sudo apt-get ${pkg_opts} install curl > /dev/null
     $sudo apt-get ${pkg_opts} update > /dev/null
     echo "  Installing missing prerequisite packages, if any.."
-    pkg_list="libpq-dev python3 build-essential pkg-config libffi-dev libgmp-dev libssl-dev libtinfo-dev systemd libsystemd-dev libsodium-dev zlib1g-dev make g++ tmux git jq libncursesw5 gnupg aptitude libtool autoconf secure-delete iproute2 bc tcptraceroute dialog automake sqlite3 bsdmainutils libusb-1.0-0-dev libudev-dev unzip"
+    pkg_list="libpq-dev python3 build-essential pkg-config libffi-dev libgmp-dev libssl-dev libtinfo-dev systemd libsystemd-dev libsodium-dev zlib1g-dev make g++ tmux git jq libncursesw5 gnupg aptitude libtool autoconf liblmdb-dev secure-delete iproute2 bc tcptraceroute dialog automake sqlite3 bsdmainutils libusb-1.0-0-dev libudev-dev unzip"
     $sudo apt-get ${pkg_opts} install ${pkg_list} > /dev/null;rc=$?
     if [ $rc != 0 ]; then
       echo "An error occurred while installing the prerequisite packages, please investigate by using the command below:"
@@ -312,6 +312,16 @@ if [[ "${LIBSODIUM_FORK}" = "Y" ]]; then
   $sudo make install > install.log 2>&1
   echo "IOG fork of libsodium installed to /usr/local/lib/"
 fi
+
+cd "${HOME}"/git
+git clone https://github.com/bitcoin-core/secp256k1 &>/dev/null
+cd secp256k1
+git checkout ac83be33 &>/dev/null
+./autogen.sh > autogen.log > /tmp/secp256k1.log 2>&1
+./configure --enable-module-schnorrsig --enable-experimental > configure.log >> /tmp/secp256k1.log 2>&1
+make > make.log 2>&1
+$sudo make install > install.log 2>&1
+echo "Installed libsecp256k1 a optimized C library for ECDSA signatures and secret/public key operations on curve"
 
 if [[ "${INSTALL_CNCLI}" = "Y" ]]; then
   echo "Installing CNCLI"

@@ -29,7 +29,7 @@ services:
       dockerfile: dockerfile_stage3
     env_file: ./.env
     environment:
-      - NETWORK=${NETWORK:-mainnet}
+      - NETWORK=${NETWORK:-preview}
     volumes:
       - node-db:/opt/cardano/cnode/db
       - node-ipc:/opt/cardano/cnode/sockets
