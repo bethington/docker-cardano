@@ -455,12 +455,12 @@ if [[ ${NETWORK} = "guild" ]]; then
   curl -s -f -m ${CURL_TIMEOUT} -o alonzo-genesis.json.tmp ${URL_RAW}/files/alonzo-genesis-guild.json
   curl -s -f -m ${CURL_TIMEOUT} -o topology.json.tmp ${URL_RAW}/files/topology-guild.json
   curl -s -f -m ${CURL_TIMEOUT} -o config.json.tmp ${URL_RAW}/files/config-guild.json
-elif [[ ${NETWORK} =~ ^(mainnet|testnet|staging)$ ]]; then
-  curl -sL -f -m ${CURL_TIMEOUT} -o byron-genesis.json.tmp https://hydra.iohk.io/job/Cardano/iohk-nix/cardano-deployment/latest-finished/download/1/${NETWORK}-byron-genesis.json
-  curl -sL -f -m ${CURL_TIMEOUT} -o shelley-genesis.json.tmp https://hydra.iohk.io/job/Cardano/iohk-nix/cardano-deployment/latest-finished/download/1/${NETWORK}-shelley-genesis.json
-  curl -sL -f -m ${CURL_TIMEOUT} -o alonzo-genesis.json.tmp https://hydra.iohk.io/job/Cardano/iohk-nix/cardano-deployment/latest-finished/download/1/${NETWORK}-alonzo-genesis.json
-  curl -sL -f -m ${CURL_TIMEOUT} -o topology.json.tmp https://hydra.iohk.io/job/Cardano/iohk-nix/cardano-deployment/latest-finished/download/1/${NETWORK}-topology.json
-  curl -s -f -m ${CURL_TIMEOUT} -o config.json.tmp ${URL_RAW}/files/config-${NETWORK}.json
+elif [[ ${NETWORK} =~ ^(mainnet|testnet|staging|preprod|preview|alonzo-purple|marlowe-pioneers|p2p|shelley-qa|sre|vasil-dev)$ ]]; then
+  curl -sL -f -m ${CURL_TIMEOUT} -o byron-genesis.json.tmp https://raw.githubusercontent.com/bethington/docker-cardano/main/environments/${NETWORK}/byron-genesis.json
+  curl -sL -f -m ${CURL_TIMEOUT} -o shelley-genesis.json.tmp https://raw.githubusercontent.com/bethington/docker-cardano/main/environments/${NETWORK}/shelley-genesis.json
+  curl -sL -f -m ${CURL_TIMEOUT} -o alonzo-genesis.json.tmp https://raw.githubusercontent.com/bethington/docker-cardano/main/environments/${NETWORK}/alonzo-genesis.json
+  curl -sL -f -m ${CURL_TIMEOUT} -o topology.json.tmp https://raw.githubusercontent.com/bethington/docker-cardano/main/environments/${NETWORK}/topology.json
+  curl -s -f -m ${CURL_TIMEOUT} -o config.json.tmp https://raw.githubusercontent.com/bethington/docker-cardano/main/environments/${NETWORK}/config.json
 else
   err_exit "Unknown network specified! Kindly re-check the network name, valid options are: mainnet, testnet, guild & staging."
 fi
