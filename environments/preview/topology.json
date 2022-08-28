@@ -15,7 +15,7 @@
       "publicRoots": {
         "accessPoints": [
           {
-            "address": "preview-node.world.dev.cardano.org",
+            "address": "3.72.231.105",
             "port": 30002
           }
         ],
